@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>TileLayerUrlFun</title>
+    <link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
+  </head>
+  <body>
+    <h1>TileLayerUrlFun</h1>
+
+    <div id="map" style="width: 800px; height: 600px"></div>
+
+    <script type="text/javascript" src="http://leafletjs.com/dist/leaflet.js"></script>
+
+    <!-- Contribution -->
+    <script type="text/javascript" src="tilelayer_urlfun.js"></script>
+
+    <!-- Test -->
+    <script type="text/javascript">
+// Example inspired from http://leafletjs.com/examples/layers-control-example.html
+
+var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+    'Imagery © <a href="http://mapbox.com">Mapbox</a>'
+
+, grayscale   = L.tileLayerUrlFun( mbUrlFun, {id: 'examples.map-20v6611k', attribution: mbAttr } )
+
+, map = L.map('map', {
+    center: [39.73, -104.99],
+    zoom: 10,
+    layers: [grayscale]
+})
+;
+
+function mbUrlFun( cfg )
+{
+    // Example map defined only in certain parts of the world.  Proof
+    // of concept: every other tile :)
+
+    return 0 === ((cfg.x + cfg.y) % 2) 
+        ?  L.Util.template( 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', cfg )
+        :  ''  // Empty tile
+    ;
+}
+    </script>
+
+  </body>
+</html>
